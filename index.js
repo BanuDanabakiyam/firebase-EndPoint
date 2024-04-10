@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 const db = admin.firestore();
-const corsFunctions = require('@google-cloud/functions-framework');
+// const corsFunctions = require('@google-cloud/functions-framework');
 
 /**
  * HTTP function that supports CORS requests.
@@ -12,19 +12,19 @@ const corsFunctions = require('@google-cloud/functions-framework');
  * @param {Object} req Cloud Function request context.
  * @param {Object} res Cloud Function response context.
  */
-corsFunctions.http('corsEnabledFunction', (req, res) => {
+// corsFunctions.http('corsEnabledFunction', (req, res) => {
   
-  res.set('Access-Control-Allow-Origin', '*');
+//   res.set('Access-Control-Allow-Origin', '*');
 
-  if (req.method === 'OPTIONS') {
-    res.set('Access-Control-Allow-Methods', 'GET');
-    res.set('Access-Control-Allow-Headers', 'Content-Type');
-    res.set('Access-Control-Max-Age', '3600');
-    res.status(204).send('');
-  } else {
-    res.send('Hello World!');
-  }
-});
+//   if (req.method === 'OPTIONS') {
+//     res.set('Access-Control-Allow-Methods', 'GET');
+//     res.set('Access-Control-Allow-Headers', 'Content-Type');
+//     res.set('Access-Control-Max-Age', '3600');
+//     res.status(204).send('');
+//   } else {
+//     res.send('Hello World!');
+//   }
+// });
 
 
 const isValidName = (name) => {
@@ -41,6 +41,8 @@ exports.photoGallery = functions.https.onRequest(async (req, res) => {
     try {
         const method = req.method;
         const path = req.path;
+
+        res.set('Access-Control-Allow-Origin', '*');
 
         if (method === 'GET' && path === '/getAllPhotos') {
             const allImages = await db.collection('photoGallery').get();
